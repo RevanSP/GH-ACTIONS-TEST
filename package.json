@@ -1,0 +1,11 @@
+{
+    "name": "json-users-scraper",
+    "version": "1.0.0",
+    "scripts": {
+      "scrape": "node scrape.js"
+    },
+    "dependencies": {
+      "puppeteer": "^21.0.0"
+    }
+  }
+  
