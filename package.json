@@ -5,7 +5,10 @@
       "scrape": "node scrape.js"
     },
     "dependencies": {
-      "puppeteer": "^21.0.0"
+      "puppeteer-core": "^22.8.2"
+    },
+    "devDependencies": {
+      "puppeteer": "^22.8.2"
     }
   }
   

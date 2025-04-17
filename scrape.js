@@ -1,8 +1,13 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const fs = require('fs');
+const { executablePath } = require('puppeteer');
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    executablePath: executablePath(), 
+    headless: true,
+  });
+
   const page = await browser.newPage();
   await page.goto('https://jsonplaceholder.typicode.com/users');
 
