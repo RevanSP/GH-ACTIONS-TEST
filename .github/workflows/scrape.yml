@@ -26,8 +26,8 @@ jobs:
 
       - name: Commit scraped JSON
         run: |
-          git config user.name "revansp"
-          git config user.email "revanspstudy28@gmail.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add public/users.json
           git commit -m "Update users.json" || echo "No changes"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
