@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JSON Users</title>
+  <meta charset="UTF-8">
+  <title>User List</title>
 </head>
 <body>
-  <h1>Daftar User</h1>
-  <ul id="user-list"></ul>
+  <h1>Daftar Pengguna</h1>
+  <ul id="users"></ul>
 
   <script>
     fetch('/users.json')
       .then(res => res.json())
-      .then(data => {
-        const list = document.getElementById('user-list');
-        data.forEach(user => {
-          const item = document.createElement('li');
-          item.textContent = `${user.name} (${user.email})`;
-          list.appendChild(item);
+      .then(users => {
+        const ul = document.getElementById('users');
+        users.forEach(user => {
+          const li = document.createElement('li');
+          li.textContent = `${user.name} (${user.email})`;
+          ul.appendChild(li);
         });
       });
   </script>
