@@ -2,17 +2,18 @@ name: Daily Scraper
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # setiap hari jam 00:00 UTC
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # Setiap hari jam 00:00 UTC
+  workflow_dispatch:  # Memungkinkan menjalankan secara manual juga
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -21,15 +22,12 @@ jobs:
         run: npm install
 
       - name: Run Puppeteer Scraper
-        uses: tj-actions/puppeteer@v5
-        with:
-          files: |
-            scrape.js  # File scraping kamu
+        run: npm run scrape  # Menjalankan skrip scrape.js
 
       - name: Commit scraped JSON
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add public/users.json
           git commit -m "Update users.json" || echo "No changes"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}

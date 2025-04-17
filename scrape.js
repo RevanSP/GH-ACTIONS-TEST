@@ -3,17 +3,18 @@ const fs = require('fs');
 
 (async () => {
   const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    headless: true, // Pastikan mode headless
   });
 
   const page = await browser.newPage();
-  await page.goto('https://jsonplaceholder.typicode.com/users', { waitUntil: 'networkidle2' });
+  await page.goto('https://jsonplaceholder.typicode.com/users');
 
-  const body = await page.evaluate(() => document.body.innerText);
-  const data = JSON.parse(body);
+  // Ambil data dalam format JSON
+  const data = await page.evaluate(() => {
+    return JSON.parse(document.body.innerText);
+  });
 
-  fs.mkdirSync('public', { recursive: true });
+  // Simpan data sebagai file JSON
   fs.writeFileSync('public/users.json', JSON.stringify(data, null, 2));
 
   await browser.close();
