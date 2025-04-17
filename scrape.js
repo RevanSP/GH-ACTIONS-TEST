@@ -10,7 +10,11 @@ const logFilePath = path.join(__dirname, 'scrape_errors.log');
 
 async function scrapeAnimeList() {
     console.log('Launching browser...');
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']  // Menonaktifkan sandbox
+    });
+
     const page = await browser.newPage();
     console.log('Navigating to anime list page...');
     await page.goto(baseURL, { waitUntil: 'networkidle2', timeout: 60000 });
