@@ -1,4 +1,4 @@
-name: Daily Scraper
+name: Scrape Anime List
 
 on:
   schedule:
@@ -8,7 +8,6 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -28,6 +27,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add public/users.json
-          git commit -m "Update users.json" || echo "No changes"
+          git add public/anime.json
+          git commit -m "Update anime.json" || echo "No changes"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}

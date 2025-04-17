@@ -2,23 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .anime-card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .anime-card img {
+      width: 200px;
+      height: auto;
+      border-radius: 8px;
+      margin-right: 20px;
+    }
+
+    .anime-card h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .anime-card p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .anime-card a {
+      font-size: 14px;
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .anime-card a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <h1>Daftar Pengguna</h1>
-  <ul id="users"></ul>
 
-  <script>
-    fetch('/users.json')
-      .then(res => res.json())
-      .then(users => {
-        const ul = document.getElementById('users');
-        users.forEach(user => {
-          const li = document.createElement('li');
-          li.textContent = `${user.name} (${user.email})`;
-          ul.appendChild(li);
-        });
+<div class="container">
+  <h1>Anime List</h1>
+  <div id="anime-list">
+    <!-- Anime list akan dimuat di sini -->
+  </div>
+</div>
+
+<script>
+  // Mengambil data anime dari public/anime.json
+  fetch('anime.json')
+    .then(response => response.json())
+    .then(data => {
+      const animeListContainer = document.getElementById('anime-list');
+      
+      // Menambahkan setiap anime ke dalam halaman
+      data.forEach(anime => {
+        const animeCard = document.createElement('div');
+        animeCard.classList.add('anime-card');
+
+        animeCard.innerHTML = `
+          <img src="${anime.coverImg}" alt="${anime.title}">
+          <div>
+            <h2>${anime.title}</h2>
+            <p>${anime.sinopsis || 'No synopsis available.'}</p>
+            <a href="${anime.url}" target="_blank">Read more</a>
+          </div>
+        `;
+        
+        animeListContainer.appendChild(animeCard);
       });
-  </script>
+    })
+    .catch(error => {
+      console.error('Error fetching anime data:', error);
+      const animeListContainer = document.getElementById('anime-list');
+      animeListContainer.innerHTML = '<p>Failed to load anime data.</p>';
+    });
+</script>
+
 </body>
 </html>
